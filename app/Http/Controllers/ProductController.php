@@ -5,21 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Product;
 
-class AdminController extends Controller
+class ProductController extends Controller
 {
 
+    /**
+     * Constructor
+     * Authorize action , except index, show
+     */
     public function __construct(){
-        $this->middleware('admin');
+        $this->middleware('admin', ['except' => ['index' , 'show']]);
     }
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 'products' is something which carry
+     * $products data to the view
+     * @return view otherwise redirect to /
      */
     public function index()
     {
-        //
+        $products = Product::all()->take(10);
+        if($products!=null){
+            return view('/product', [
+                'products' => $products
+            ]);
+        }
+        $message = "Whoopss something went wrong, please try again.";
+        return redirect()->route('/')->with(['message' => $message]);
+
     }
 
     /**

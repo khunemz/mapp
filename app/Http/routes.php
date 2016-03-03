@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
 
-    //Resource : AdminController
-    Route::resource('admin', 'AdminController');
+    //Resource : ProductController
+    Route::resource('product', 'ProductController');
 
 });
