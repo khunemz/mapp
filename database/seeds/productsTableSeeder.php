@@ -15,8 +15,8 @@ class productsTableSeeder extends Seeder
             DB::table('products')->insert([
                 'productTitle' => str_random(20),
                 'productCaption' => str_random(20),
-                'price' => str_random(6),
-                'image_id' => str_random(4),
+                'price' => random_int(2,999),
+                'image_id' => random_int(2,999),
                 'category' => str_random(20)
             ]);
         }
