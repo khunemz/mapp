@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddProductIdColumn extends Migration
+class AlterImageType extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddProductIdColumn extends Migration
     public function up()
     {
         Schema::table('images',function(Blueprint $table){
-            $table->integer('product_id');
+            $table->string('image', 255)->nullable()->change();
         });
     }
 
@@ -24,7 +24,8 @@ class AddProductIdColumn extends Migration
      */
     public function down()
     {
-        Schema::drop('product_id');
-
+        Schema::table('images', function(Blueprint $table){
+            $table->dropColumn('image');
+        });
     }
 }
