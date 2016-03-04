@@ -34,8 +34,8 @@ class productTest extends TestCase
             ->see('Edit');
     }
 
-    public function should_store_and_redirect_to_show(){
+    public function should_store_and_redirect_to_index(){
         $this->visit('/product/store')
-            ->assertRedirectedToRoute('product.show');
+            ->assertRedirectedToRoute('product.index');
     }
 }

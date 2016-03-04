@@ -1,20 +1,32 @@
-<h4>Edit</h4>
-<form id="form-edit" name="form-edit"
-      class="form-group" action="{{ route('product.update') }}" method="post">
-    <input name="productTitle" class="form-control"
-           type="text" placeholder="Product Title"
-           value="{{ $product->productTitle }}"/>
-    <textarea class="form-control" name="productCaption"
-              id="productCaption" cols="30"
-              rows="10" placeholder="Type some caption"
-            value="{{ $product->productCaption }}"></textarea>
-    <input name="price" class="form-control"
-           type="number" placeholder="Price"
-            value="{{ $product->price }}"/>
-    <input name="category" class="form-control"
-           type="text" placeholder="Category"
-           value="{{ $product->category }}"/>
-    <button class="btn btn-success" type="submit">Submit</button>
-    <input type="hidden" value="{{ Session::token() }}" name="_token"/>
-    <input type="hidden" value="{{ csrf_token() }}" name="_token"/>
-</form>
+
+<h3>Edit 2</h3>
+{!! Form::model('$product', [
+'method' => 'patch',
+'route' => ['product.update', $product->id]
+]) !!}
+
+    {!! Form::text('productTitle', $product->productTitle ,[
+            'placeholder' => 'Product Title',
+            'class' => 'form-control'
+        ]) !!}
+    {!! Form::textarea('productCaption', $product->productCaption ,[
+        'placeholder' => 'Product Caption',
+        'class' => 'form-control'
+        ]) !!}
+    {!! Form::text('productTitle', $product->productTitle ,[
+        'placeholder' => 'Product Title',
+        'class' => 'form-control'
+        ]) !!}
+    {!! Form::number('price', $product->price ,[
+        'placeholder' => 'Price',
+        'class' => 'form-control'
+        ]) !!}
+    {!! Form::text('category', $product->category ,[
+        'placeholder' => 'category',
+        'class' => 'form-control'
+        ]) !!}
+    {!! Form::submit('Submit', [
+        'class' => 'btn btn-success'
+    ]) !!}
+
+{!! Form::close() !!}

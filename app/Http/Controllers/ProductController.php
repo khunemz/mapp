@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Product;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -26,7 +27,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all()->take(50);
+        $products = Product::orderBy('created_at', 'desc')->get()->take(40);
         if($products!=null){
             return
                 view('product.index', [
@@ -85,8 +86,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        /* todo change 2 to $id */
-        $product = Product::find('2');
+        $product = Product::find($id);
         return view('product.show', ['product' => $product]);
     }
 
@@ -105,7 +105,8 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Find record by id then assign request to Product instance
+     * and store to database. Finally , redirect to @show.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -113,7 +114,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'productTitle' => 'required|max:255',
+            'productCaption' => 'required|max:1000',
+            'price' => 'required',
+            'category' => 'required'
+        ]);
+        $product = Product::find($id);
+        $product->productTitle = $request->productTitle;
+        $product->productCaption = $request->productCaption;
+        $product->price = $request->price;
+        $product->category = $request->category;
+        $product->save();
+
+        return view('product.show', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -124,6 +140,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('product.index');
     }
 }
