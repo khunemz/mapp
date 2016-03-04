@@ -27,12 +27,13 @@ class ProductController extends Controller
     {
         $products = Product::all()->take(10);
         if($products!=null){
-            return view('/product', [
+            return
+                view('product.index', [
                 'products' => $products
             ]);
         }
         $message = "Whoopss something went wrong, please try again.";
-        return redirect()->route('/')->with(['message' => $message]);
+        return redirect()->route('/product')->with(['message' => $message]);
 
     }
 
@@ -58,14 +59,16 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show data with ID.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        /* todo change 2 to $id */
+        $product = Product::find('2');
+        return view('product.show', ['product' => $product]);
     }
 
     /**
@@ -76,7 +79,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
