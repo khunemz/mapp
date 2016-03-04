@@ -28,4 +28,14 @@ class productTest extends TestCase
         $this->visit('/product/create')
             ->see('Create');
     }
+
+    public function should_show_edit_form_with_data(){
+        $this->visit('/product/{product}/edit')
+            ->see('Edit');
+    }
+
+    public function should_store_and_redirect_to_show(){
+        $this->visit('/product/store')
+            ->assertRedirectedToRoute('product.show');
+    }
 }

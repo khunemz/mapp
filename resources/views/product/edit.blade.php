@@ -1,6 +1,6 @@
 <h4>Edit</h4>
-<form id="form-create" name="form-create"
-      class="form-group" action="{{ route('product.store') }}" method="post">
+<form id="form-edit" name="form-edit"
+      class="form-group" action="{{ route('product.update') }}" method="post">
     <input name="productTitle" class="form-control"
            type="text" placeholder="Product Title"
            value="{{ $product->productTitle }}"/>

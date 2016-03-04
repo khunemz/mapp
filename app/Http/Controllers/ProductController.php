@@ -14,10 +14,10 @@ class ProductController extends Controller
      * Constructor
      * Authorize action , except index, show
      */
-    public function __construct(){
-        $this->middleware('admin', ['only' => ['store' ,
-            'update' , 'destroy' ]]);
-    }
+//    public function __construct(){
+//        $this->middleware('admin', ['only' => ['store' ,
+//            'update' , 'destroy' ]]);
+//    }
     /**
      * Display a listing of the resource.
      * 'products' is something which carry
@@ -56,7 +56,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validate $request
+        $this->validate($request,[
+            'productTitle' => 'required|max:255',
+            'productCaption' => 'required|max:1000',
+            'price' => 'required',
+            'category' => 'required'
+        ]);
+
+        //Store $request to database
+        $product = new Product();
+        //Match table column to data input name
+        $product->productTitle = $request->productTitle;
+        $product->productCaption = $request->productCaption;
+        $product->price = $request->price;
+        $product->category = $request->category;
+        $product->save();
+
+        //Check success and redirect
+        return redirect()->route('product.index')->with(['product'=> $product]);
     }
 
     /**
@@ -73,7 +91,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show edit form with retrieved specific data.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
