@@ -25,6 +25,8 @@
         'placeholder' => 'category',
         'class' => 'form-control'
         ]) !!}
+    {!! Form::file('image') !!}
+
     {!! Form::submit('Submit', [
         'class' => 'btn btn-success'
     ]) !!}
