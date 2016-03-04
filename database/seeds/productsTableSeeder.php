@@ -11,13 +11,15 @@ class productsTableSeeder extends Seeder
      */
     public function run()
     {
+        $faker = \Faker\Factory::create();
+
         for($i=0; $i<100; $i++) {
             DB::table('products')->insert([
-                'productTitle' => str_random(20),
-                'productCaption' => str_random(20),
-                'price' => random_int(2,999),
-                'image_id' => random_int(2,999),
-                'category' => str_random(20)
+                'productTitle' => $faker->unique()->name,
+                'productCaption' => $faker->paragraph,
+                'price' => random_int(1,9999),
+                'image_id' => random_int(1,4),
+                'category' => $faker->mimeType
             ]);
         }
     }

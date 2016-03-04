@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesTable extends Migration
+class AddProductIdColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images',function(Blueprint $table){
-            $table->increments('id');
-            $table->binary('image');
-            $table->integer('user_id');
-            $table->timestamps();
-
+        Schema::table('images',function(Blueprint $table){
+            $table->integer('product_id');
         });
     }
 
@@ -28,6 +24,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('images');
+        Schema::drop('product_id');
     }
 }

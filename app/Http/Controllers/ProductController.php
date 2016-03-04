@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -87,7 +88,9 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        return view('product.show', ['product' => $product]);
+        return view('product.show', [
+            'product' => $product
+        ]);
     }
 
     /**

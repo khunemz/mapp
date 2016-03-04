@@ -1,9 +1,10 @@
-<h4>{{ $product->id }}</h4>
-<h4>{{ $product->productTitle }}</h4>
-<h4>{{ $product->productCaption }}</h4>
-<h4>{{ $product->price }}</h4>
-<h4>{{ $product->id }} {{ $product->category }}</h4>
-
+<h4>Product id {{ $product->id }}</h4>
+<h4>Title {{ $product->productTitle }}</h4>
+<h4>Caption {{ $product->productCaption }}</h4>
+<h4>Price {{ $product->price }}</h4>
+@foreach($product->images as $image)
+    <h4>Img id {{ $image->id }}</h4>
+@endforeach
 <a href="{{ route('product.create') }}">Create</a>
 <a href="{{ route('product.edit', ['product' => $product->id]) }}">Edit</a>
 
