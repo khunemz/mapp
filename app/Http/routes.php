@@ -29,6 +29,6 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
 
     //Resource : ProductController
-    Route::resource('product', 'ProductController');
+    Route::resource('product', 'ProductController', ['before' => 'csrf']);
 
 });

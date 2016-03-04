@@ -29,4 +29,6 @@
         'class' => 'btn btn-success'
     ]) !!}
 
+    {!! Form::token() !!}
+
 {!! Form::close() !!}
