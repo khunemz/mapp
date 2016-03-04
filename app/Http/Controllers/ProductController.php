@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all()->take(10);
+        $products = Product::all()->take(50);
         if($products!=null){
             return
                 view('product.index', [
@@ -80,7 +80,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-
+        $product = Product::find($id);
+        return view('product.edit', [
+            'product' => $product
+        ]);
     }
 
     /**
