@@ -23,4 +23,9 @@ class productTest extends TestCase
             ->see('2')
             ->see('wiAKXI');
     }
+
+    public function should_show_create_form(){
+        $this->visit('/product/create')
+            ->see('Create');
+    }
 }

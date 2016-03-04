@@ -15,7 +15,8 @@ class ProductController extends Controller
      * Authorize action , except index, show
      */
     public function __construct(){
-        $this->middleware('admin', ['except' => ['index' , 'show']]);
+        $this->middleware('admin', ['only' => ['store' ,
+            'update' , 'destroy' ]]);
     }
     /**
      * Display a listing of the resource.
@@ -38,13 +39,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
