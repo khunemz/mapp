@@ -10,7 +10,7 @@
            type="number" placeholder="Price"/>
     <input name="category" class="form-control"
            type="text" placeholder="Category"/>
-    <input name="image" type="file"/>
+    <input name="image[]" type="file" multiple/>
     <button class="btn btn-success" type="submit">Submit</button>
     {!! Form::token() !!}
 </form>

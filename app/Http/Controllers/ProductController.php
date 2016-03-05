@@ -64,7 +64,7 @@ class ProductController extends Controller
      * 9. Save $product first , it will return $product
      *  , including id
      * 10. Create image which matches to returned id
-     *  from product , which saved before.
+     *  from $product , which saved before via create method.
      * 11. redirect
      *
      * @param  \Illuminate\Http\Request  $request
@@ -78,20 +78,32 @@ class ProductController extends Controller
             'productCaption' => 'required|max:1000',
             'price' => 'required',
             'category' => 'required',
-            'image' => 'mimes:jpeg,png'
+            'image[]' => 'mimes:jpeg,png'
         ]);
 
 
-        //Store request image file on $file
-        $file = $request->file('image');
-        //get image file name (original)
-        $filePath = $file->getClientOriginalName();
-        //Move file to specified folder with original name
-        $file->move( public_path() . '/uploads/', $filePath);
         //instantiate Image (has-many) object
         $imageObj = new \App\Image();
-        //Assign $filePath to $imageObj
-        $imageObj->image = $filePath;
+        $img[] = $imageObj->image;
+        $uploadcount=0;
+        //Store request image file on $file
+        $files = $request->file('image');
+        $files_count = count($files);
+        foreach($files as $file){
+            $filePath = $file->getClientOriginalName();
+            $file->move(public_path() . '/uploads/', $filePath);
+            $img[$uploadcount] = $filePath;
+            $uploadcount ++;
+        }
+
+
+//        for($j=0; $j<= $files_count; $j++)  {
+//            $filePath = $files[$j]->getClientOriginalName();
+//            //Move file to specified folder with original name
+//            $files[$j]->move(public_path() . '/uploads/', $filePath);
+//            //Assign $filePath to $imageObj
+//            $imageObj->image[$j] = $filePath;
+//        }
 
         //Match table column to data input name
         $product = new Product();
@@ -101,11 +113,15 @@ class ProductController extends Controller
         $product->category = $request->category;
         //Store to database
         $product->save();
-        $product->images()->create([
-            'image' => $imageObj->image]);
 
+        for($i=0; $i < $files_count; $i++){
+            $product->images()->create([
+                'image' => $img[$i],
+                'product_id' => $product->id
+            ]);
+        }
 
-        return redirect()->route('product.index')->with([
+        return view('product.show')->with([
             'product'=> $product
             ]);
     }
@@ -176,6 +192,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
+        $product->images()->delete();
         $product->delete();
         return redirect()->route('product.index');
     }

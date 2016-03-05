@@ -26,7 +26,11 @@
         'placeholder' => 'category',
         'class' => 'form-control'
         ]) !!}
-    {!! Form::file('image') !!}
+
+    @foreach($product->images as $image)
+        <p>ID {{ $image->id }}</p>
+        {!! Form::file('image') !!}
+    @endforeach
 
     {!! Form::submit('Submit', [
         'class' => 'btn btn-success'
