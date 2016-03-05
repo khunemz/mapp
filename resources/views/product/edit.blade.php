@@ -1,6 +1,7 @@
 
 <h3>Edit 2</h3>
-{!! Form::model('$product', [
+
+{!! Form::model($product, [
 'method' => 'patch',
 'route' => ['product.update', $product->id]
 ]) !!}

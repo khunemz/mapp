@@ -1,5 +1,5 @@
 <h4>Create</h4>
-<form id="form-create" name="form-create"
+<form id="form-create" name="form-create" enctype="multipart/form-data"
       class="form-group" action="{{ route('product.store') }}" method="post">
     <input name="productTitle" class="form-control"
            type="text" placeholder="Product Title"/>
@@ -12,6 +12,49 @@
            type="text" placeholder="Category"/>
     <input name="image" type="file"/>
     <button class="btn btn-success" type="submit">Submit</button>
-    <input type="hidden" value="{{ Session::token() }}" name="_token"/>
-    <input type="hidden" value="{{ csrf_token() }}" name="_token"/>
+    {!! Form::token() !!}
 </form>
+
+
+
+{{--<h4>Create</h4>--}}
+
+{{--{!! Form::model($product, [--}}
+        {{--'method' => 'post',--}}
+        {{--'route' => [--}}
+        {{--'product.store',--}}
+        {{--$product--}}
+    {{--]--}}
+    {{--]) !!}--}}
+
+{{--{!! Form::text('productTitle', null ,[--}}
+        {{--'placeholder' => 'Product Title',--}}
+        {{--'class' => 'form-control',--}}
+    {{--]) !!}--}}
+{{--{!! Form::textarea('productCaption', null,[--}}
+        {{--'placeholder' => 'Product Caption',--}}
+        {{--'class' => 'form-control'--}}
+    {{--]) !!}--}}
+{{--{!! Form::text('productTitle', null ,[--}}
+        {{--'placeholder' => 'Product Title',--}}
+        {{--'class' => 'form-control'--}}
+    {{--]) !!}--}}
+{{--{!! Form::number('price', null,[--}}
+        {{--'placeholder' => 'Price',--}}
+        {{--'class' => 'form-control'--}}
+    {{--]) !!}--}}
+{{--{!! Form::text('category', null ,[--}}
+        {{--'placeholder' => 'category',--}}
+        {{--'class' => 'form-control'--}}
+    {{--]) !!}--}}
+
+{{--{!! Form::file('image') !!}--}}
+
+{{--{!! Form::submit('Submit', [--}}
+    {{--'class' => 'btn btn-success'--}}
+{{--]) !!}--}}
+
+{{--{!! Form::token() !!}--}}
+
+{{--{!! Form::close() !!}--}}
+
