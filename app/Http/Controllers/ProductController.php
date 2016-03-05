@@ -73,20 +73,23 @@ class ProductController extends Controller
         //store request image file on $file
         $file = $request->file('image');
         //get image file name
-        $fileName = $file->getClientOriginalName('image');
+        $filePath = $file->getClientOriginalName();
+        $file->move( public_path() . '/uploads/', $filePath);
+
         //Match table column to data input name
         $product->productTitle = $request->productTitle;
         $product->productCaption = $request->productCaption;
         $product->price = $request->price;
         $product->category = $request->category;
-        $product->images()->image = $fileName;
-
+        $product->images()->image = $file->getRealPath();
         //move file to public/uploads
-        $file->move( public_path() . '/uploads/');
+
 
         //Check success and redirect
         if($product->save()){
-        return redirect()->route('product.index')->with(['product'=> $product]);
+        return redirect()->route('product.index')->with([
+            'product'=> $product
+            ]);
         }
     }
 
