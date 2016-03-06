@@ -97,14 +97,6 @@ class ProductController extends Controller
         }
 
 
-//        for($j=0; $j<= $files_count; $j++)  {
-//            $filePath = $files[$j]->getClientOriginalName();
-//            //Move file to specified folder with original name
-//            $files[$j]->move(public_path() . '/uploads/', $filePath);
-//            //Assign $filePath to $imageObj
-//            $imageObj->image[$j] = $filePath;
-//        }
-
         //Match table column to data input name
         $product = new Product();
         $product->productTitle = $request->productTitle;
@@ -169,14 +161,40 @@ class ProductController extends Controller
             'productTitle' => 'required|max:255',
             'productCaption' => 'required|max:1000',
             'price' => 'required',
-            'category' => 'required'
+            'category' => 'required',
+            'image[]' => 'mimes:jpeg,png'
+
         ]);
+
+        //instantiate Image (has-many) object
+        $imageObj = new \App\Image();
+        $img[] = $imageObj->image;
+        $uploadcount=0;
+        //Store request image file on $file
+        $files = $request->file('image');
+        $files_count = count($files);
+        foreach($files as $file){
+            $filePath = $file->getClientOriginalName();
+            $file->move(public_path() . '/uploads/', $filePath);
+            $img[$uploadcount] = $filePath;
+            $uploadcount ++;
+        }
+
         $product = Product::find($id);
         $product->productTitle = $request->productTitle;
         $product->productCaption = $request->productCaption;
         $product->price = $request->price;
         $product->category = $request->category;
+
+
         $product->save();
+
+        for($i=0; $i < $files_count; $i++){
+            $product->images()->update([
+                'image' => $img[$i],
+                'product_id' => $product->id
+            ]);
+        }
 
         return view('product.show', [
             'product' => $product

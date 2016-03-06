@@ -3,6 +3,7 @@
 
 {!! Form::model($product, [
 'method' => 'patch',
+'enctype' => 'multipart/form-data',
 'route' => ['product.update', $product->id]
 ]) !!}
 
@@ -29,7 +30,10 @@
 
     @foreach($product->images as $image)
         <p>ID {{ $image->id }}</p>
-        {!! Form::file('image') !!}
+        {!! Form::file('image[]', [
+            'multiple' => 'true'
+        ]) !!}
+
     @endforeach
 
     {!! Form::submit('Submit', [
@@ -39,3 +43,7 @@
     {!! Form::token() !!}
 
 {!! Form::close() !!}
+
+
+
+
